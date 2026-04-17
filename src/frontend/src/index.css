@@ -1,0 +1,201 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-display: "General Sans", sans-serif;
+    --font-body: "DM Sans", sans-serif;
+    --font-mono: "Geist Mono", monospace;
+    --radius: 0.375rem;
+
+    --background: 0.97 0.02 255;
+    --foreground: 0.18 0.02 255;
+    --card: 0.99 0 0;
+    --card-foreground: 0.18 0.02 255;
+    --popover: 0.99 0 0;
+    --popover-foreground: 0.18 0.02 255;
+
+    --primary: 0.45 0.21 254;
+    --primary-foreground: 0.98 0 0;
+
+    --secondary: 0.92 0.02 255;
+    --secondary-foreground: 0.25 0 0;
+    --muted: 0.92 0.02 255;
+    --muted-foreground: 0.55 0.01 255;
+
+    --accent: 0.65 0.18 142;
+    --accent-foreground: 0.99 0 0;
+
+    --destructive: 0.55 0.22 25;
+    --destructive-foreground: 0.98 0 0;
+
+    --border: 0.92 0.01 255;
+    --input: 0.95 0.01 255;
+    --ring: 0.45 0.21 254;
+
+    --chart-1: 0.65 0.18 142;
+    --chart-2: 0.68 0.19 76;
+    --chart-3: 0.58 0.17 290;
+    --chart-4: 0.7 0.19 175;
+    --chart-5: 0.45 0.21 254;
+
+    --sidebar: 0.97 0.02 255;
+    --sidebar-foreground: 0.18 0.02 255;
+    --sidebar-primary: 0.45 0.21 254;
+    --sidebar-primary-foreground: 0.98 0 0;
+    --sidebar-accent: 0.92 0.02 255;
+    --sidebar-accent-foreground: 0.35 0.02 255;
+    --sidebar-border: 0.9 0.01 255;
+    --sidebar-ring: 0.45 0.21 254;
+  }
+
+  .dark {
+    --background: 0.13 0.02 254;
+    --foreground: 0.93 0.02 255;
+    --card: 0.16 0.02 254;
+    --card-foreground: 0.93 0.02 255;
+    --popover: 0.2 0.02 254;
+    --popover-foreground: 0.93 0.02 255;
+
+    --primary: 0.65 0.18 254;
+    --primary-foreground: 0.13 0.02 254;
+
+    --secondary: 0.2 0.02 254;
+    --secondary-foreground: 0.88 0.02 255;
+    --muted: 0.2 0.02 254;
+    --muted-foreground: 0.58 0.01 255;
+
+    --accent: 0.72 0.16 142;
+    --accent-foreground: 0.13 0.02 254;
+
+    --destructive: 0.65 0.19 22;
+    --destructive-foreground: 0.13 0.02 254;
+
+    --border: 0.25 0.02 254;
+    --input: 0.25 0.02 254;
+    --ring: 0.65 0.18 254;
+
+    --chart-1: 0.72 0.16 142;
+    --chart-2: 0.75 0.17 76;
+    --chart-3: 0.65 0.16 290;
+    --chart-4: 0.78 0.18 175;
+    --chart-5: 0.65 0.18 254;
+
+    --sidebar: 0.16 0.02 254;
+    --sidebar-foreground: 0.93 0.02 255;
+    --sidebar-primary: 0.65 0.18 254;
+    --sidebar-primary-foreground: 0.13 0.02 254;
+    --sidebar-accent: 0.2 0.02 254;
+    --sidebar-accent-foreground: 0.88 0.02 255;
+    --sidebar-border: 0.22 0.02 254;
+    --sidebar-ring: 0.65 0.18 254;
+  }
+
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+}
+
+@font-face {
+  font-family: "General Sans";
+  src: url("/assets/fonts/GeneralSans.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DM Sans";
+  src: url("/assets/fonts/DMSans.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/assets/fonts/GeistMono.woff2") format("woff2");
+  font-display: swap;
+}
+
+@layer utilities {
+  .transition-smooth {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Module accent utilities */
+  .accent-attendance {
+    @apply text-[oklch(var(--chart-1))];
+  }
+
+  .accent-fees {
+    @apply text-[oklch(var(--chart-2))];
+  }
+
+  .accent-performance {
+    @apply text-[oklch(var(--chart-3))];
+  }
+
+  .bg-attendance {
+    @apply bg-[oklch(var(--chart-1)/0.1)];
+  }
+
+  .bg-fees {
+    @apply bg-[oklch(var(--chart-2)/0.1)];
+  }
+
+  .bg-performance {
+    @apply bg-[oklch(var(--chart-3)/0.1)];
+  }
+
+  /* Login page branding panel */
+  .login-panel-bg {
+    background: linear-gradient(
+      145deg,
+      oklch(0.28 0.21 264) 0%,
+      oklch(0.2 0.22 268) 55%,
+      oklch(0.16 0.18 278) 100%
+    );
+  }
+  .login-panel-blob-top {
+    background: oklch(0.85 0.12 255);
+  }
+  .login-panel-blob-bottom {
+    background: oklch(0.65 0.18 142);
+  }
+  .login-panel-icon-bg {
+    background: oklch(0.62 0.19 254);
+  }
+  .login-panel-text-title {
+    color: oklch(0.96 0.01 255);
+  }
+  .login-panel-text-heading {
+    color: oklch(0.97 0.01 255);
+  }
+  .login-panel-text-accent {
+    color: oklch(0.78 0.18 142);
+  }
+  .login-panel-text-body {
+    color: oklch(0.68 0.04 262);
+  }
+  .login-panel-text-dim {
+    color: oklch(0.6 0.03 262);
+  }
+  .login-panel-text-label {
+    color: oklch(0.93 0.02 255);
+  }
+  .login-panel-text-footer {
+    color: oklch(0.45 0.03 265);
+  }
+  .login-panel-icon-color {
+    color: oklch(0.98 0 0);
+  }
+  .login-panel-feature-icon-bg {
+    background: oklch(1 0 0 / 0.07);
+  }
+  .login-panel-authenticated-bg {
+    background: oklch(var(--accent) / 0.12);
+    border-color: oklch(var(--accent) / 0.25);
+    color: oklch(var(--accent));
+  }
+}

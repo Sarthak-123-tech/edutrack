@@ -1,0 +1,196 @@
+// Version: 1.0.0
+type AttendanceId__91187254 = Nat;
+type AttendanceRecord__699091857 =
+  {
+    courseId : CourseId__927523888;
+    date : Timestamp__301639476;
+    id : AttendanceId__91187254;
+    markedBy : TeacherId__977536047;
+    notes : Text;
+    status : AttendanceStatus__1021638340;
+    studentId : StudentId__585118929
+  };
+type AttendanceStatus__1021638340 = {#absent; #late; #present};
+type BatchId__34059046 = Nat;
+type Batch__35319496 =
+  {
+    courses : [CourseId__927523888];
+    createdAt : Timestamp__301639476;
+    id : BatchId__34059046;
+    name : Text;
+    year : Nat
+  };
+type ClassSession__385269579 =
+  {
+    courseId : CourseId__927523888;
+    createdAt : Timestamp__301639476;
+    date : Timestamp__301639476;
+    duration : Nat;
+    id : ScheduleId__346114795;
+    status : ClassStatus__373194555;
+    teacherId : TeacherId__977536047;
+    time : Text;
+    topic : Text
+  };
+type ClassStatus__373194555 = {#cancelled; #completed; #upcoming};
+type CourseId__927523888 = Nat;
+type Course__321233390 =
+  {
+    batch : BatchId__34059046;
+    createdAt : Timestamp__301639476;
+    description : Text;
+    id : CourseId__927523888;
+    isActive : Bool;
+    name : Text;
+    schedule : Text;
+    teacherId : TeacherId__977536047
+  };
+type Data__791452850<K, V> =
+  {var count : Nat__490723111; kvs : [var ?(K, V)]};
+type ExternalBlob__246066408 = Blob;
+type FeeId__630778756 = Nat;
+type FeeStatus__1058318181 = {#paid; #partial; #unpaid};
+type FeeTransaction__854560675 =
+  {
+    amount : Nat;
+    createdAt : Timestamp__301639476;
+    dueDate : Timestamp__301639476;
+    feeType : FeeType__859402884;
+    id : FeeId__630778756;
+    notes : Text;
+    paidDate : ?Timestamp__301639476;
+    status : FeeStatus__1058318181;
+    studentId : StudentId__585118929
+  };
+type FeeType__859402884 = {#annual; #monthly; #quarterly};
+type Internal__8484328<K, V> =
+  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
+type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type Map__158565046<K, V> = Map__297112838<K, V>;
+type Map__297112838<K, V> =
+  {var root : Node__46230540<K, V>; var size : Nat__490723111};
+type Map__605269027<K, V> = Map__158565046<K, V>;
+type MarkId__454837853 = Nat;
+type Mark__820799887 =
+  {
+    courseId : CourseId__927523888;
+    date : Timestamp__301639476;
+    examType : Text;
+    id : MarkId__454837853;
+    marks : Nat;
+    maxMarks : Nat;
+    recordedBy : TeacherId__977536047;
+    remarks : Text;
+    studentId : StudentId__585118929
+  };
+type MaterialId__538543334 = Nat;
+type MaterialType__11858968 = {#assignment; #notes; #resource};
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__46230540<K, V> =
+  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type ScheduleId__346114795 = Nat;
+type StudentId__585118929 = Nat;
+type StudentProfile__553316508 =
+  {
+    batch : BatchId__34059046;
+    email : Text;
+    enrolledCourses : [CourseId__927523888];
+    id : StudentId__585118929;
+    isActive : Bool;
+    joiningDate : Timestamp__301639476;
+    name : Text;
+    principal : Principal
+  };
+type StudyMaterial__847768103 =
+  {
+    courseId : CourseId__927523888;
+    description : Text;
+    fileBlob : ExternalBlob__246066408;
+    fileName : Text;
+    id : MaterialId__538543334;
+    materialType : MaterialType__11858968;
+    title : Text;
+    uploadDate : Timestamp__301639476;
+    uploadedBy : TeacherId__977536047
+  };
+type TeacherId__977536047 = Nat;
+type TeacherProfile__630457268 =
+  {
+    email : Text;
+    id : TeacherId__977536047;
+    isActive : Bool;
+    joinedDate : Timestamp__301639476;
+    name : Text;
+    principal : Principal;
+    qualification : Text;
+    subjects : [Text]
+  };
+type Timestamp__301639476 = Int;
+type UserRole__1054455867 = {#admin; #guest; #user};
+actor {
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__605269027<Principal, UserRole__1054455867>
+    };
+  stable attendance :
+    {
+      var root :
+        Node__46230540<AttendanceId__91187254, AttendanceRecord__699091857>;
+      var size : Nat__490723111
+    };
+  stable batches :
+    {
+      var root : Node__46230540<BatchId__34059046, Batch__35319496>;
+      var size : Nat__490723111
+    };
+  stable courses :
+    {
+      var root : Node__46230540<CourseId__927523888, Course__321233390>;
+      var size : Nat__490723111
+    };
+  stable fees :
+    {
+      var root : Node__46230540<FeeId__630778756, FeeTransaction__854560675>;
+      var size : Nat__490723111
+    };
+  stable marks :
+    {
+      var root : Node__46230540<MarkId__454837853, Mark__820799887>;
+      var size : Nat__490723111
+    };
+  stable materials :
+    {
+      var root :
+        Node__46230540<MaterialId__538543334, StudyMaterial__847768103>;
+      var size : Nat__490723111
+    };
+  stable nextAttendanceId : {var value : Nat};
+  stable nextBatchId : {var value : Nat};
+  stable nextCourseId : {var value : Nat};
+  stable nextFeeId : {var value : Nat};
+  stable nextMarkId : {var value : Nat};
+  stable nextMaterialId : {var value : Nat};
+  stable nextSessionId : {var value : Nat};
+  stable nextStudentId : {var value : Nat};
+  stable nextTeacherId : {var value : Nat};
+  stable sessions :
+    {
+      var root :
+        Node__46230540<ScheduleId__346114795, ClassSession__385269579>;
+      var size : Nat__490723111
+    };
+  stable students :
+    {
+      var root :
+        Node__46230540<StudentId__585118929, StudentProfile__553316508>;
+      var size : Nat__490723111
+    };
+  stable teachers :
+    {
+      var root :
+        Node__46230540<TeacherId__977536047, TeacherProfile__630457268>;
+      var size : Nat__490723111
+    }
+};

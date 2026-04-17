@@ -1,0 +1,361 @@
+type _ImmutableObjectStorageRefillResult = 
+ record {
+   success: opt bool;
+   topped_up_amount: opt nat;
+ };
+type _ImmutableObjectStorageRefillInformation = record {
+                                                  proposed_top_up_amount:
+                                                   opt nat;};
+type _ImmutableObjectStorageCreateCertificateResult = 
+ record {
+   blob_hash: text;
+   method: text;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type UpdateTeacherArgs = 
+ record {
+   email: text;
+   isActive: bool;
+   name: text;
+   qualification: text;
+   subjects: vec text;
+ };
+type UpdateStudentArgs = 
+ record {
+   batch: BatchId;
+   email: text;
+   isActive: bool;
+   name: text;
+ };
+type UpdateSessionArgs = 
+ record {
+   date: Timestamp;
+   duration: nat;
+   status: ClassStatus;
+   time: text;
+   topic: text;
+ };
+type UpdateFeeArgs = 
+ record {
+   amount: nat;
+   dueDate: Timestamp;
+   feeType: FeeType;
+   notes: text;
+   paidDate: opt Timestamp;
+   status: FeeStatus;
+ };
+type UpdateCourseArgs = 
+ record {
+   batch: BatchId;
+   description: text;
+   isActive: bool;
+   name: text;
+   schedule: text;
+   teacherId: TeacherId;
+ };
+type Timestamp = int;
+type TeacherProfile = 
+ record {
+   email: text;
+   id: TeacherId;
+   isActive: bool;
+   joinedDate: Timestamp;
+   name: text;
+   "principal": principal;
+   qualification: text;
+   subjects: vec text;
+ };
+type TeacherId = nat;
+type StudyMaterial = 
+ record {
+   courseId: CourseId;
+   description: text;
+   fileBlob: ExternalBlob;
+   fileName: text;
+   id: MaterialId;
+   materialType: MaterialType;
+   title: text;
+   uploadDate: Timestamp;
+   uploadedBy: TeacherId;
+ };
+type StudentProfile = 
+ record {
+   batch: BatchId;
+   email: text;
+   enrolledCourses: vec CourseId;
+   id: StudentId;
+   isActive: bool;
+   joiningDate: Timestamp;
+   name: text;
+   "principal": principal;
+ };
+type StudentPerformanceSummary = 
+ record {
+   averagePercentage: nat;
+   courseId: CourseId;
+   marks: vec MarkId;
+   studentId: StudentId;
+   totalExams: nat;
+ };
+type StudentId = nat;
+type ScheduleId = nat;
+type MaterialType = 
+ variant {
+   assignment;
+   notes;
+   resource;
+ };
+type MaterialId = nat;
+type MarkId = nat;
+type Mark = 
+ record {
+   courseId: CourseId;
+   date: Timestamp;
+   examType: text;
+   id: MarkId;
+   marks: nat;
+   maxMarks: nat;
+   recordedBy: TeacherId;
+   remarks: text;
+   studentId: StudentId;
+ };
+type FeeType = 
+ variant {
+   annual;
+   monthly;
+   quarterly;
+ };
+type FeeTransaction = 
+ record {
+   amount: nat;
+   createdAt: Timestamp;
+   dueDate: Timestamp;
+   feeType: FeeType;
+   id: FeeId;
+   notes: text;
+   paidDate: opt Timestamp;
+   status: FeeStatus;
+   studentId: StudentId;
+ };
+type FeeStatus = 
+ variant {
+   paid;
+   partial;
+   unpaid;
+ };
+type FeeId = nat;
+type ExternalBlob = blob;
+type DashboardAnalytics = 
+ record {
+   activeCourses: nat;
+   activeStudents: nat;
+   averageAttendance: nat;
+   feeCollectionRate: nat;
+   totalBatches: nat;
+   totalMaterials: nat;
+   totalStudents: nat;
+   totalTeachers: nat;
+ };
+type CreateTeacherArgs = 
+ record {
+   email: text;
+   name: text;
+   qualification: text;
+   subjects: vec text;
+ };
+type CreateStudentArgs = 
+ record {
+   batch: BatchId;
+   email: text;
+   joiningDate: Timestamp;
+   name: text;
+ };
+type CreateSessionArgs = 
+ record {
+   courseId: CourseId;
+   date: Timestamp;
+   duration: nat;
+   time: text;
+   topic: text;
+ };
+type CreateMaterialArgs = 
+ record {
+   courseId: CourseId;
+   description: text;
+   fileBlob: ExternalBlob;
+   fileName: text;
+   materialType: MaterialType;
+   title: text;
+ };
+type CreateMarkArgs = 
+ record {
+   courseId: CourseId;
+   date: Timestamp;
+   examType: text;
+   marks: nat;
+   maxMarks: nat;
+   remarks: text;
+   studentId: StudentId;
+ };
+type CreateFeeArgs = 
+ record {
+   amount: nat;
+   dueDate: Timestamp;
+   feeType: FeeType;
+   notes: text;
+   studentId: StudentId;
+ };
+type CreateCourseArgs = 
+ record {
+   batch: BatchId;
+   description: text;
+   name: text;
+   schedule: text;
+   teacherId: TeacherId;
+ };
+type CreateBatchArgs = 
+ record {
+   name: text;
+   year: nat;
+ };
+type CreateAttendanceArgs = 
+ record {
+   courseId: CourseId;
+   date: Timestamp;
+   notes: text;
+   status: AttendanceStatus;
+   studentId: StudentId;
+ };
+type CourseId = nat;
+type Course = 
+ record {
+   batch: BatchId;
+   createdAt: Timestamp;
+   description: text;
+   id: CourseId;
+   isActive: bool;
+   name: text;
+   schedule: text;
+   teacherId: TeacherId;
+ };
+type ClassStatus = 
+ variant {
+   cancelled;
+   completed;
+   upcoming;
+ };
+type ClassSession = 
+ record {
+   courseId: CourseId;
+   createdAt: Timestamp;
+   date: Timestamp;
+   duration: nat;
+   id: ScheduleId;
+   status: ClassStatus;
+   teacherId: TeacherId;
+   time: text;
+   topic: text;
+ };
+type BatchId = nat;
+type Batch = 
+ record {
+   courses: vec CourseId;
+   createdAt: Timestamp;
+   id: BatchId;
+   name: text;
+   year: nat;
+ };
+type AttendanceStatus = 
+ variant {
+   absent;
+   late;
+   present;
+ };
+type AttendanceRecord = 
+ record {
+   courseId: CourseId;
+   date: Timestamp;
+   id: AttendanceId;
+   markedBy: TeacherId;
+   notes: text;
+   status: AttendanceStatus;
+   studentId: StudentId;
+ };
+type AttendanceId = nat;
+service : {
+  _immutableObjectStorageBlobsAreLive: (hashes: vec blob) -> (vec bool) query;
+  _immutableObjectStorageBlobsToDelete: () -> (vec blob) query;
+  _immutableObjectStorageConfirmBlobDeletion: (blobs: vec blob) -> ();
+  _immutableObjectStorageCreateCertificate: (blobHash: text) ->
+   (_ImmutableObjectStorageCreateCertificateResult);
+  _immutableObjectStorageRefillCashier: (refillInformation:
+   opt _ImmutableObjectStorageRefillInformation) ->
+   (_ImmutableObjectStorageRefillResult);
+  _immutableObjectStorageUpdateGatewayPrincipals: () -> ();
+  _initializeAccessControl: () -> ();
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  cancelSession: (id: ScheduleId) -> ();
+  createBatch: (args: CreateBatchArgs) -> (Batch);
+  createCourse: (args: CreateCourseArgs) -> (Course);
+  createFee: (args: CreateFeeArgs) -> (FeeTransaction);
+  createSession: (args: CreateSessionArgs) -> (ClassSession);
+  createStudent: (args: CreateStudentArgs) -> (StudentProfile);
+  createTeacher: ("principal": principal, args: CreateTeacherArgs) ->
+   (TeacherProfile);
+  deleteMaterial: (id: MaterialId) -> ();
+  deleteStudent: (id: StudentId) -> ();
+  deleteTeacher: (id: TeacherId) -> ();
+  enrollStudentInCourse: (studentId: StudentId, courseId: CourseId) -> ();
+  getAttendanceRate: (studentId: StudentId, courseId: CourseId) ->
+   (nat) query;
+  getBatch: (id: BatchId) -> (opt Batch) query;
+  getCallerUserRole: () -> (UserRole) query;
+  getCourse: (id: CourseId) -> (opt Course) query;
+  getDashboardAnalytics: () -> (DashboardAnalytics) query;
+  getFee: (id: FeeId) -> (opt FeeTransaction) query;
+  getFeeCollectionRate: () -> (nat) query;
+  getMaterial: (id: MaterialId) -> (opt StudyMaterial) query;
+  getMyStudentProfile: () -> (opt StudentProfile) query;
+  getMyTeacherProfile: () -> (opt TeacherProfile) query;
+  getPerformanceSummary: (studentId: StudentId, courseId: CourseId) ->
+   (StudentPerformanceSummary) query;
+  getSession: (id: ScheduleId) -> (opt ClassSession) query;
+  getStudent: (id: StudentId) -> (opt StudentProfile) query;
+  getTeacher: (id: TeacherId) -> (opt TeacherProfile) query;
+  isCallerAdmin: () -> (bool) query;
+  listAttendanceByCourse: (courseId: CourseId) ->
+   (vec AttendanceRecord) query;
+  listAttendanceByDate: (courseId: CourseId, date: Timestamp) ->
+   (vec AttendanceRecord) query;
+  listAttendanceByStudent: (studentId: StudentId) ->
+   (vec AttendanceRecord) query;
+  listBatches: () -> (vec Batch) query;
+  listCourses: () -> (vec Course) query;
+  listCoursesByBatch: (batchId: BatchId) -> (vec Course) query;
+  listCoursesByTeacher: (teacherId: TeacherId) -> (vec Course) query;
+  listFees: () -> (vec FeeTransaction) query;
+  listFeesByStudent: (studentId: StudentId) -> (vec FeeTransaction) query;
+  listMarksByCourse: (courseId: CourseId) -> (vec Mark) query;
+  listMarksByStudent: (studentId: StudentId) -> (vec Mark) query;
+  listMaterials: () -> (vec StudyMaterial) query;
+  listMaterialsByCourse: (courseId: CourseId) -> (vec StudyMaterial) query;
+  listSessionsByCourse: (courseId: CourseId) -> (vec ClassSession) query;
+  listSessionsByTeacher: (teacherId: TeacherId) -> (vec ClassSession) query;
+  listStudents: () -> (vec StudentProfile) query;
+  listTeachers: () -> (vec TeacherProfile) query;
+  recordAttendance: (args: CreateAttendanceArgs) -> (AttendanceRecord);
+  recordMark: (args: CreateMarkArgs) -> (Mark);
+  seedDemoData: () -> (text);
+  unenrollStudentFromCourse: (studentId: StudentId, courseId: CourseId) -> ();
+  updateCourse: (id: CourseId, args: UpdateCourseArgs) -> ();
+  updateFee: (id: FeeId, args: UpdateFeeArgs) -> ();
+  updateSession: (id: ScheduleId, args: UpdateSessionArgs) -> ();
+  updateStudent: (id: StudentId, args: UpdateStudentArgs) -> ();
+  updateTeacher: (id: TeacherId, args: UpdateTeacherArgs) -> ();
+  uploadMaterial: (args: CreateMaterialArgs) -> (StudyMaterial);
+}

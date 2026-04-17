@@ -1,0 +1,24 @@
+{
+  "overview": "EduTrack is a full-stack Tuition Management System with role-based access for students, teachers, and admins. It covers course management, attendance tracking, fee management, file uploads for study materials, performance tracking, and an analytics dashboard — all in a modern, responsive UI.",
+  "features": [
+    "Role-based access: student, teacher, admin panels",
+    "Student: view courses, fees, attendance, and study materials",
+    "Teacher: manage attendance, upload materials, track performance, schedule classes",
+    "Admin: manage users, courses, batches, fee tracking (paid/unpaid)",
+    "Analytics dashboard with enrollment, fee, and attendance charts",
+    "File uploads for study materials and assignments",
+    "Internet Identity authentication",
+    "Sample data for demo use"
+  ],
+  "category": "education",
+  "tags": [
+    "education",
+    "tuition",
+    "school-management",
+    "attendance",
+    "fees",
+    "react",
+    "motoko"
+  ],
+  "last_updated": "2026-04-17T16:54:39.634Z"
+}
